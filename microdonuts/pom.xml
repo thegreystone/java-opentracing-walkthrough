@@ -78,6 +78,11 @@
     <artifactId>zipkin-sender-okhttp3</artifactId>
     <version>2.7.6</version>
   </dependency>
+  <dependency>
+    <groupId>se.hirt.jmc</groupId>
+    <artifactId>jfr-tracer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </dependency>
 
 </dependencies>
 
