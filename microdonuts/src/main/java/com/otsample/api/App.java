@@ -23,6 +23,7 @@ import io.jaegertracing.Configuration.SenderConfiguration;
 import io.jaegertracing.samplers.ConstSampler;
 import io.opentracing.Tracer;
 import io.opentracing.util.GlobalTracer;
+import se.hirt.jmc.opentracing.DelegatingJfrTracer;
 import zipkin2.Span;
 import zipkin2.reporter.AsyncReporter;
 import zipkin2.reporter.Reporter;
@@ -71,7 +72,7 @@ public class App
         return config;
     }
 
-    static boolean configureGlobalTracer(Properties config, String componentName)
+	static boolean configureGlobalTracer(Properties config, String componentName)
         throws MalformedURLException
     {
         String tracerName = config.getProperty("tracer");
@@ -110,7 +111,7 @@ public class App
         } else {
             return false;
         }
-        GlobalTracer.register(tracer);
+        GlobalTracer.register(new DelegatingJfrTracer(tracer));
         return true;
     }
 }

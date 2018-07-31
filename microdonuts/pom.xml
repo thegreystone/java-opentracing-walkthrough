@@ -78,6 +78,11 @@
     <artifactId>zipkin-sender-okhttp3</artifactId>
     <version>2.7.6</version>
   </dependency>
+  <dependency>
+    <groupId>se.hirt.jmc</groupId>
+    <artifactId>jfr-tracer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </dependency>
 
 </dependencies>
 
@@ -108,28 +113,47 @@
         <version>1.6.0</version>
         <executions>
           <execution>
+            <id>standard</id>
             <goals>
               <goal>exec</goal>
             </goals>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-cp</argument>
+                <argument>target/api-1.0-SNAPSHOT.jar</argument>
+                <argument>-Dorg.eclipse.jetty.util.log.classrg.eclipse.jetty.util.log.StdErrLog</argument>
+                <argument>com.otsample.api.App</argument>
+                <argument>./tracer_config.properties</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>debug</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-Xdebug</argument>
+          	    <argument>-Xrunjdwp:transport=dt_socket,address=8008,server=y,suspend=y</argument>
+                <argument>-cp</argument>
+                <argument>target/api-1.0-SNAPSHOT.jar</argument>
+                <argument>-Dorg.eclipse.jetty.util.log.classrg.eclipse.jetty.util.log.StdErrLog</argument>
+                <argument>com.otsample.api.App</argument>
+                <argument>./tracer_config.properties</argument>
+              </arguments>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-cp</argument>
-            <argument>target/api-1.0-SNAPSHOT.jar</argument>
-            <argument>-Dorg.eclipse.jetty.util.log.classrg.eclipse.jetty.util.log.StdErrLog</argument>
-            <argument>com.otsample.api.App</argument>
-            <argument>./tracer_config.properties</argument>
-          </arguments>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>

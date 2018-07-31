@@ -31,7 +31,7 @@ public class KitchenConsumer
     public KitchenConsumer()
     {
         // A decorator that overrides the operation name with the URL path
-        OkHttpClientSpanDecorator opNameDecorator = new OkHttpClientSpanDecorator() {
+    	OkHttpClientSpanDecorator opNameDecorator = new OkHttpClientSpanDecorator() {
                 @Override
                 public void onRequest(Request request, Span span) {
                     // The important part:
